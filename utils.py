@@ -1,16 +1,17 @@
-import openai
+  import os
+from openai import OpenAI
 
-openai.api_key = "YOUR_API_KEY"   # replace with your key
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def generate_question(role):
     prompt = f"Generate one interview question for a {role}."
 
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[{"role": "user", "content": prompt}]
     )
 
-    return response.choices[0].message['content']
+    return response.choices[0].message.content
 
 
 def evaluate_answer(question, answer):
@@ -18,14 +19,14 @@ def evaluate_answer(question, answer):
     Question: {question}
     Answer: {answer}
 
-    Evaluate this answer. Give:
+    Give:
     1. Score out of 10
     2. Short feedback
     """
 
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[{"role": "user", "content": prompt}]
     )
 
-    return response.choices[0].message['content']
+    return response.choices[0].message.content
