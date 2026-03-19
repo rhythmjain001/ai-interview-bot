@@ -1,4 +1,4 @@
-  import os
+import os
 from openai import OpenAI
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -16,13 +16,13 @@ def generate_question(role):
 
 def evaluate_answer(question, answer):
     prompt = f"""
-    Question: {question}
-    Answer: {answer}
+Question: {question}
+Answer: {answer}
 
-    Give:
-    1. Score out of 10
-    2. Short feedback
-    """
+Give:
+1. Score out of 10
+2. Short feedback
+"""
 
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
